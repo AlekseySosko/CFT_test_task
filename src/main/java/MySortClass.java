@@ -6,20 +6,20 @@ import java.util.List;
 
 public class MySortClass {
 
-    public static void sortByMergingMultipleFiles(String sortMode, String dataType, String outFile, List<String> fileOfNames) {
-        String[] arrayStr = createArray(fileOfNames);
+    public static void sortByMergingMultipleFiles(String sortMode, String dataType, String outFile, List<String> files) {
+        String[] dataArray = createArray(files);
 
-        if (dataType.equals("-i") && !arrayContentIsANumber(arrayStr)) {
+        if (dataType.equals("-i") && !arrayContentIsANumber(dataArray)) {
             dataType = "-s";
             System.out.println("Вы попытались отсортировать массив строк, как массив чисел.\n" +
                     "Значение аргумента \"args[1]\" будет изменено на \"-s\".");
         }
 
-        mergeSort(arrayStr, arrayStr.length, sortMode, dataType);
+        mergeSort(dataArray, dataArray.length, sortMode, dataType);
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outFile))) {
-            for (String str : arrayStr) {
-                writer.write(str + "\n");
+            for (String data : dataArray) {
+                writer.write(data + "\n");
             }
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
@@ -27,16 +27,16 @@ public class MySortClass {
             e.printStackTrace();
         }
 
-        System.out.println(Arrays.toString(arrayStr));
+        System.out.println(Arrays.toString(dataArray));
     }
 
 
-    private static String[] createArray(List<String> fileOfNames) {
+    private static String[] createArray(List<String> files) {
         List<String> resultList = new ArrayList<>();
         boolean error = false;
 
-        for (String fileName : fileOfNames) {
-            try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+        for (String file : files) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                 while (reader.ready()) {
                     String str = reader.readLine();
                     if (str.matches("^\\S+$")) {

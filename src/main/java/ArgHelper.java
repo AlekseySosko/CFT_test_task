@@ -25,7 +25,7 @@ public class ArgHelper {
 
         } else if (args[0].matches("^-[ad]$") && !args[2].matches(argOutFile.pattern()) || args[0].matches("^-[si]") && !args[1].matches(argOutFile.pattern())) {
 
-            System.out.println("Не задан выходной файл или тип данных");
+            System.out.println("Не задан выходной файл или порядок объявления параметров неверен");
             return false;
 
         } else if (!args[args.length - 1].matches(argInputFile.pattern())) {
@@ -73,7 +73,7 @@ public class ArgHelper {
         return null;
     }
 
-    public static List<String> getFileOfNames(String[] args) {
+    public static List<String> getFiles(String[] args) {
         List<String> result = new ArrayList<>();
 
         for (String fileName : args) {
